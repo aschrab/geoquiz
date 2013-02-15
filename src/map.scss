@@ -1,5 +1,19 @@
-path {
+.county {
+    font-size:           12px;
+    fill:                #006bb1;
+    fill-opacity:        1;
+    fill-rule:           nonzero;
+    stroke:              #ffffff;
+    stroke-width:        0.60000002;
+    stroke-linecap:      butt;
+    stroke-linejoin:     bevel;
+    stroke-miterlimit:   4;
+    stroke-opacity:      1;
+    stroke-dasharray:    none;
+    marker-start:        none;
+
     &:hover {
-        fill: #999999 !important;
+        fill:            #999999;
     }
 }
+
