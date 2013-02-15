@@ -9,7 +9,16 @@ svg = (args...) ->
 
 counties = {}
 
+svgStyle = (src) ->
+    style = $(svg().get(0).createElementNS "http://www.w3.org/1999/xhtml", "link")
+    style.attr 'rel',  'stylesheet'
+    style.attr 'type', 'text/css'
+    style.attr 'href', src
+    svg('path').get(0).parentNode.appendChild style.get(0)
+
 svgSetup = ->
+    svgStyle('assets/map.css')
+
     elems = svg('path')
     svg('path').on('click', objectClicked)
     list = $('#list')
