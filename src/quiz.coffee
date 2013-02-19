@@ -5,7 +5,10 @@ jQuery ->
 svg = (args...) ->
     unless window.svg
         window.svg = $('#geo').get(0).getSVGDocument()
-    $( args...,  window.svg)
+    if args
+        $( args...,  window.svg)
+    else
+        window.svg
 
 counties = {}
 
