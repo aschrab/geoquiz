@@ -1,9 +1,15 @@
 d = false
 
 jQuery ->
-    $('#doSetup').on 'click', -> d.resolve()
-
     svgLoaded().done svgSetup
+    checkReady = ->
+        if $('#geo').get(0).getSVGDocument()
+            d.resolve()
+        else
+            setTimeout checkReady, 100
+
+    checkReady()
+
 
 svgLoaded = ->
     d = $.Deferred()
