@@ -67,4 +67,6 @@ objectClicked = (ev) ->
     county = $(ev.target)
     county.css('fill', '#ff0000')
     name = county.attr('inkscape:label')
-    $('#county-name').text( name )
+    $('#selected').text name
+    attempts = $('#attempts')
+    attempts.text( Number(attempts.text()) + 1 )
