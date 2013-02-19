@@ -2,6 +2,7 @@ d = false
 
 jQuery ->
     svgLoaded().done svgSetup
+    $('#next').on 'click', nextQuestion
     checkReady = ->
         if $('#geo').get(0).getSVGDocument()
             d.resolve()
