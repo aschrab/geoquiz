@@ -1,6 +1,13 @@
+d = false
+
 jQuery ->
-    $('#doSetup').on('click', svgSetup)
-    $('#geo').on('load', svgSetup)
+    $('#doSetup').on 'click', -> d.resolve()
+
+    svgLoaded().done svgSetup
+
+svgLoaded = ->
+    d = $.Deferred()
+    d.promise()
 
 svg = (args...) ->
     unless window.svg
