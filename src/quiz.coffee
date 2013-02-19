@@ -24,6 +24,7 @@ svg = (args...) ->
         window.svg
 
 counties = {}
+county_list = []
 
 svgStyle = (src) ->
     style = $(svg().get(0).createElementNS "http://www.w3.org/1999/xhtml", "link")
@@ -31,6 +32,14 @@ svgStyle = (src) ->
     style.attr 'type', 'text/css'
     style.attr 'href', src
     svg('path').get(0).parentNode.appendChild style.get(0)
+
+shuffle = (arr) ->
+    i = arr.length
+    return [] unless i > 0
+
+    while --i
+        j = Math.floor(Math.random() * (i+1))
+        [arr[i], arr[j]] = [arr[j], arr[i]] # use pattern matching to swap
 
 svgSetup = ->
     svgStyle('assets/map.css')
@@ -43,6 +52,15 @@ svgSetup = ->
         county = $(county)
         name = county.attr('inkscape:label')
         counties[ name ] = county
+        county_list.push county
+
+    shuffle county_list
+    nextQuestion()
+
+nextQuestion = ->
+    $('#selected').text('')
+    wanted = county_list.shift()
+    $('#wanted').text wanted.attr('inkscape:label')
 
 objectClicked = (ev) ->
     county = $(ev.target)
