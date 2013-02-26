@@ -65,7 +65,8 @@ nextQuestion = ->
 
 objectClicked = (ev) ->
     county = $(ev.target)
-    county.css('fill', '#ff0000')
+    svg('.selected').removeClass('selected')
+    county.addClass('selected')
     name = county.attr('inkscape:label')
     $('#selected').text name
     attempts = $('#attempts')

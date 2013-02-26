@@ -15,5 +15,9 @@
     &:hover {
         fill:            #999999;
     }
+
+    &.selected {
+        fill:            #ff0000;
+    }
 }
 
