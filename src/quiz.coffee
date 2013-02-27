@@ -44,7 +44,7 @@ shuffle = (arr) ->
         [arr[i], arr[j]] = [arr[j], arr[i]] # use pattern matching to swap
 
 svgSetup = ->
-    svgStyle('assets/map.css')
+    svgStyle $('link[rel="svg-styles"]').attr('href')
 
     elems = svg('path')
     svg('path').on('click', objectClicked)
