@@ -3,6 +3,7 @@ d = false
 jQuery ->
     svgLoaded().done svgSetup
     $('#next').on 'click', nextQuestion
+    $('#reveal').on 'click', reveal
     checkReady = ->
         if $('#geo').get(0).getSVGDocument()
             d.resolve()
@@ -62,6 +63,10 @@ nextQuestion = ->
     $('#selected').text('')
     wanted = county_list.shift()
     $('#wanted').text wanted.attr('inkscape:label')
+
+reveal = ->
+    svg('.selected').removeClass('selected')
+    counties[ $('#wanted').text() ].addClass('selected')
 
 objectClicked = (ev) ->
     county = $(ev.target)
