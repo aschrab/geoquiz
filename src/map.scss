@@ -1,6 +1,13 @@
+@mixin fill($fill) {
+    fill: $fill;
+
+    &:hover {
+        fill:            lighten($fill, 20%);
+    }
+}
+
 .county {
     font-size:           12px;
-    fill:                #006bb1;
     fill-opacity:        1;
     fill-rule:           nonzero;
     stroke:              #ffffff;
@@ -12,12 +19,10 @@
     stroke-dasharray:    none;
     marker-start:        none;
 
-    &:hover {
-        fill:            #999999;
-    }
+    @include fill(#006bb1);
 
     &.selected {
-        fill:            #ff0000;
+        @include fill(green);
     }
 }
 
