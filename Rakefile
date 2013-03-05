@@ -1,3 +1,4 @@
+require 'sass'
 require 'coffee_script'
 require 'guard/notifier'
 
@@ -18,8 +19,27 @@ else
     Guard::Notifier.notify "Recompiled", :title => src
 end
 
+def sass task
+    src = task.prerequisites[0]
+    dst = task.name
+    puts "#{src} => #{dst}"
+    Sass.compile_file src, dst
+rescue
+    Guard::Notifier.notify $!.to_s, :image => :failed, :title => src
+else
+    Guard::Notifier.notify "Recompiled", :title => src
+end
+
 file 'assets/quiz.js' => 'src/quiz.coffee' do |t|
     coffee t
+end
+
+file 'assets/map.css' => 'src/map.scss' do |t|
+    sass t
+end
+
+file 'assets/style.css' => 'src/style.scss' do |t|
+    sass t
 end
 
 task :pages => :guarded do
