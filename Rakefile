@@ -55,21 +55,18 @@ end
 file 'assets/quiz.js' => 'src/quiz.coffee' do |t|
     coffee t
 end
+task :pages => 'assets/quiz.js'
 
 file 'assets/map.css' => 'src/map.scss' do |t|
     sass t
 end
+task :pages => 'assets/map.css'
 
 file 'assets/style.css' => 'src/style.scss' do |t|
     sass t
 end
+task :pages => 'assets/style.css'
 
-task :pages => :guarded do
+task :pages do
     build_pages
-end
-
-task :guarded do
-    require 'guard'
-    Guard.setup :guardfile => 'Guardfile'
-    Guard.run_all
 end
