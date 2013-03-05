@@ -55,18 +55,22 @@ end
 file 'assets/quiz.js' => 'src/quiz.coffee' do |t|
     coffee t
 end
-task :pages => 'assets/quiz.js'
+task :assets => 'assets/quiz.js'
 
 file 'assets/map.css' => 'src/map.scss' do |t|
     sass t
 end
-task :pages => 'assets/map.css'
+task :assets => 'assets/map.css'
 
 file 'assets/style.css' => 'src/style.scss' do |t|
     sass t
 end
-task :pages => 'assets/style.css'
+task :assets => 'assets/style.css'
 
-task :pages do
+file 'index.html' => [ 'src/index.erb', :assets ] do |t|
+    sh "erb #{t.prerequisites[0]} > #{t.name}"
+end
+
+task :pages => 'index.html' do
     build_pages
 end
