@@ -71,6 +71,8 @@ file 'index.html' => [ 'src/index.erb', :assets ] do |t|
     sh "erb #{t.prerequisites[0]} > #{t.name}"
 end
 
+task :guarded => 'index.html'
+
 task :pages => 'index.html' do
     build_pages
 end
