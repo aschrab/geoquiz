@@ -5,7 +5,11 @@
         File.open name do |f|
             hash << f.read
         end
-        "#{name}?#{Digest.hexencode hash.digest}"
+        if @development
+            "#{name}?#{Digest.hexencode hash.digest}"
+        else
+            "#{Digest.hexencode hash.digest}/#{name}"
+        end
     end
 %>
 <html>
@@ -48,4 +52,3 @@
         </div>
     </body>
 </html>
-

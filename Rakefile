@@ -9,6 +9,7 @@ def build_pages
     puts "Updating '#{branch}' branch"
 
     require 'grit'
+    require 'digest'
 
     repo = Grit::Repo.new '.'
     index = Grit::Index.new repo
@@ -17,9 +18,16 @@ def build_pages
     pages = repo.get_head branch
     abort "No '#{branch}' branch found" unless pages
 
-    %w< index.html assets/quiz.js assets/map.css assets/style.css >.each do |name|
+    File.open 'index.html' do |fh|
+        index.add 'index.html', fh.read
+    end
+
+    %w< assets/quiz.js assets/map.css assets/style.css >.each do |name|
         File.open name do |fh|
-            index.add name, fh.read
+            data = fh.read
+            hash = Digest::SHA1.new
+            hash << data
+            index.add "#{Digest.hexencode hash.digest}/#{name}", data
         end
     end
 
@@ -104,7 +112,11 @@ file 'index.html' => [ 'src/index.erb', :assets ] do |t|
     ERuby.build t
 end
 
-task :guarded => 'index.html'
+file 'dev.html' => [ 'src/index.erb', :assets ] do |t|
+    ERuby.build t, development: true
+end
+
+task :guarded => 'dev.html'
 
 task :pages => 'index.html' do
     build_pages
