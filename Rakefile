@@ -52,6 +52,39 @@ else
     Guard::Notifier.notify "Recompiled", :title => src
 end
 
+class ERuby
+    attr_reader :task, :data
+
+    def initialize task, data={}
+        @task = task
+        @data = data
+    end
+
+    def build
+        require 'erb'
+
+        src = task.prerequisites[0]
+        dst = task.name
+        puts "#{src} => #{dst}"
+
+        data.each do |k,v|
+            instance_variable_set "@#{k}", v
+        end
+
+        template = File.open(src) { |fh| fh.read }
+        b = binding
+        out = ERB.new( template ).result b
+
+        File.open dst, 'w' do |fh|
+            fh.write out
+        end
+    end
+
+    def self.build *args
+        self.new(*args).build
+    end
+end
+
 file 'assets/quiz.js' => 'src/quiz.coffee' do |t|
     coffee t
 end
@@ -68,7 +101,7 @@ end
 task :assets => 'assets/style.css'
 
 file 'index.html' => [ 'src/index.erb', :assets ] do |t|
-    sh "erb #{t.prerequisites[0]} > #{t.name}"
+    ERuby.build t
 end
 
 task :guarded => 'index.html'
