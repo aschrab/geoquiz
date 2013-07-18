@@ -59,7 +59,11 @@ svgSetup = ->
     shuffle county_list
     nextQuestion()
 
+answer_known = false
+wanted = null
+
 nextQuestion = ->
+    answer_known = false
     $('#selected').text('')
     wanted = county_list.shift()
     $('#wanted').text wanted.attr('inkscape:label')
@@ -69,12 +73,17 @@ select = (region) ->
     region.addClass('selected')
 
 reveal = ->
+    answer_known = true
     select counties[ $('#wanted').text() ]
 
 objectClicked = (ev) ->
+    return if answer_known
     county = $(ev.target)
     select county
     name = county.attr('inkscape:label')
+    if county[0] == wanted[0]
+        answer_known = true
+
     $('#selected').text name
     attempts = $('#attempts')
     attempts.text( Number(attempts.text()) + 1 )
