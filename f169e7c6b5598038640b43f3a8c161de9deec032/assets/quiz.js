@@ -1,5 +1,5 @@
 (function() {
-  var counties, county_list, d, nextQuestion, objectClicked, reveal, shuffle, svg, svgLoaded, svgSetup, svgStyle,
+  var answer_known, counties, county_list, d, nextQuestion, objectClicked, reveal, select, shuffle, svg, svgLoaded, svgSetup, svgStyle, wanted,
     __slice = [].slice;
 
   d = false;
@@ -81,24 +81,38 @@
     return nextQuestion();
   };
 
+  answer_known = false;
+
+  wanted = null;
+
   nextQuestion = function() {
-    var wanted;
+    answer_known = false;
     $('#selected').text('');
     wanted = county_list.shift();
     return $('#wanted').text(wanted.attr('inkscape:label'));
   };
 
-  reveal = function() {
+  select = function(region) {
     svg('.selected').removeClass('selected');
-    return counties[$('#wanted').text()].addClass('selected');
+    return region.addClass('selected');
+  };
+
+  reveal = function() {
+    answer_known = true;
+    return select(counties[$('#wanted').text()]);
   };
 
   objectClicked = function(ev) {
     var attempts, county, name;
+    if (answer_known) {
+      return;
+    }
     county = $(ev.target);
-    svg('.selected').removeClass('selected');
-    county.addClass('selected');
+    select(county);
     name = county.attr('inkscape:label');
+    if (county[0] === wanted[0]) {
+      answer_known = true;
+    }
     $('#selected').text(name);
     attempts = $('#attempts');
     return attempts.text(Number(attempts.text()) + 1);

@@ -45,8 +45,6 @@ def coffee task
 rescue
     Guard::Notifier.notify $!.to_s, :image => :failed, :title => src
     abort $!.to_s
-else
-    Guard::Notifier.notify "Recompiled", :title => src
 end
 
 def sass task
@@ -56,8 +54,6 @@ def sass task
     Sass.compile_file src, dst
 rescue
     Guard::Notifier.notify $!.to_s, :image => :failed, :title => src
-else
-    Guard::Notifier.notify "Recompiled", :title => src
 end
 
 class ERuby
