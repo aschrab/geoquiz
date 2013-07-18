@@ -64,14 +64,16 @@ nextQuestion = ->
     wanted = county_list.shift()
     $('#wanted').text wanted.attr('inkscape:label')
 
-reveal = ->
+select = (region) ->
     svg('.selected').removeClass('selected')
-    counties[ $('#wanted').text() ].addClass('selected')
+    region.addClass('selected')
+
+reveal = ->
+    select counties[ $('#wanted').text() ]
 
 objectClicked = (ev) ->
     county = $(ev.target)
-    svg('.selected').removeClass('selected')
-    county.addClass('selected')
+    select county
     name = county.attr('inkscape:label')
     $('#selected').text name
     attempts = $('#attempts')
