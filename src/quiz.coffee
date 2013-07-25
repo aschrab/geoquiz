@@ -69,6 +69,8 @@ nextQuestion = ->
     name = wanted.attr('inkscape:label')
     $('#wanted').text name
 
+    svg('path').removeClass 'tried'
+
     tmpl = $('#stat-row')
     stats = tmpl.clone()
     stats.removeAttr 'id'
@@ -97,6 +99,8 @@ objectClicked = (ev) ->
     if county[0] == wanted[0]
         answer_known = true
         current.find('.success').text 'Yes'
+    else
+        county.addClass 'tried'
 
     $('#selected').text name
     attempts = $('#attempts')
