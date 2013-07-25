@@ -58,3 +58,9 @@
         }
     }
 }
+
+#stats {
+    .attempts, .success {
+        text-align: right;
+    }
+}
