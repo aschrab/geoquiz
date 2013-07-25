@@ -66,7 +66,17 @@ nextQuestion = ->
     answer_known = false
     $('#selected').text('')
     wanted = county_list.shift()
-    $('#wanted').text wanted.attr('inkscape:label')
+    name = wanted.attr('inkscape:label')
+    $('#wanted').text name
+
+    svg('path').removeClass 'tried'
+
+    tmpl = $('#stat-row')
+    stats = tmpl.clone()
+    stats.removeAttr 'id'
+    stats.removeAttr 'style'
+    stats.prependTo tmpl.parent()
+    cell = stats.find('td.name').text name
 
 select = (region) ->
     svg('.selected').removeClass('selected')
@@ -81,8 +91,16 @@ objectClicked = (ev) ->
     county = $(ev.target)
     select county
     name = county.attr('inkscape:label')
+
+    current = $('#stats tr').first()
+    current_attempts = current.find('.attempts')
+    current_attempts.text( Number(current_attempts.text()) + 1 )
+
     if county[0] == wanted[0]
         answer_known = true
+        current.find('.success').text 'Yes'
+    else
+        county.addClass 'tried'
 
     $('#selected').text name
     attempts = $('#attempts')

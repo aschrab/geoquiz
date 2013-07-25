@@ -18,6 +18,10 @@ svg {
   fill: #006bb1; }
   .county:hover {
     fill: #18a4ff; }
+  .county.tried {
+    fill: red; }
+    .county.tried:hover {
+      fill: #ff6666; }
   .county.selected {
     fill: green; }
     .county.selected:hover {

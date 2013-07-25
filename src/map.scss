@@ -27,6 +27,10 @@ svg {
 
     @include fill(#006bb1);
 
+    &.tried {
+        @include fill(red);
+    }
+
     &.selected {
         @include fill(green);
     }
